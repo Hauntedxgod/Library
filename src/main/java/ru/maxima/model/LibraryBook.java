@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import ru.maxima.dao.PersonDAO;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +25,6 @@ public class LibraryBook {
 
     @Min(value = 0 , message = "Age should be more than 0")
     private int yearOfCreation;
+
+    private Person owner;
 }

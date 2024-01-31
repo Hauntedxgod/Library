@@ -1,6 +1,7 @@
 package ru.maxima.dao;
 
 import org.springframework.jdbc.core.RowMapper;
+import ru.maxima.model.LibraryBook;
 import ru.maxima.model.Person;
 
 import java.sql.ResultSet;
@@ -14,7 +15,6 @@ public class PersonMapper implements RowMapper<Person> {
         person.setId(rs.getLong("id"));
         person.setName(rs.getString("name"));
         person.setAge(rs.getInt("age"));
-
         return person;
     }
 }

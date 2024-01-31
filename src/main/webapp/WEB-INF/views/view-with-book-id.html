@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml" lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Title of Page with all book</title>
@@ -11,13 +11,29 @@
 <p align="center" th:text="${idBook.getAuthorName()}"></p>
 <p align="center" th:text="${idBook.getYearOfCreation()}"></p>
 
-<a th:href="@{/book/{id}/edit(id=${idBook.getId()})}">Edit this Book</a>
 
+<!--<form th:method="POST" th:action="@{/person/{id}(id=${idPerson.getId()})}">-->
+<!--<label for="person">Give book Person</label>-->
+<!--<input type="text" th:field="*{idPerson.name}" id="person">-->
+<!--</form>-->
+<!--<br/>-->
+<!--<input type="submit" value="Give book">-->
+
+<form th:method="POST" th:action="@{/people/{id}(id=${idPerson.getId()})}">
+  <select th:field="*{idPerson}">
+    <option th:each="person : ${idPerson}" th:value="${idPerson.id}" th:text="${idPerson.name}">
+    </option>
+    <input type="submit" value="Get book this person">
+  </select>
+</form>
+
+<br/>
+<br/>
+<a th:href="@{/book/{id}/edit(id=${idBook.getId()})}">Edit this Book</a>
 <form th:method="POST" th:action="@{/book/delete/{id}(id=${idBook.getId()})}">
   <br/>
   <input type="submit" value="Delete this book">
 </form>
-
 
 </body>
 

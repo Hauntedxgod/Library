@@ -2,6 +2,7 @@ package ru.maxima.dao;
 
 import org.springframework.jdbc.core.RowMapper;
 import ru.maxima.model.LibraryBook;
+import ru.maxima.model.Person;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

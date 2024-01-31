@@ -15,6 +15,13 @@
 <form th:method="POST" th:action="@{/people/delete/{id}(id=${personById.getId()})}">
     <input type="submit" value="Delete this person">
 </form>
+<br/>
+<br/>
+<form th:method="POST" th:action="@{/book/delete/{id}(id=${idBook.getId()})}">
+    <label> Yor book </label>
+
+    <input type="submit" value="Delete this book">
+</form>
 
 
 </body>

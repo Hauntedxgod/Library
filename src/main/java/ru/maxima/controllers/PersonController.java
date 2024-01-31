@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.maxima.dao.BookDAO;
 import ru.maxima.dao.PersonDAO;
 import ru.maxima.model.Person;
 
@@ -13,10 +14,12 @@ import ru.maxima.model.Person;
 @RequestMapping("/people")
 public class PersonController {
         private final PersonDAO personDAO;
+        private final BookDAO bookDAO;
 
         @Autowired
-        public PersonController(PersonDAO personDAO) {
+        public PersonController(PersonDAO personDAO, BookDAO bookDAO) {
             this.personDAO = personDAO;
+            this.bookDAO = bookDAO;
         }
         @GetMapping()
         public String showAllPeople(Model model){
@@ -26,6 +29,7 @@ public class PersonController {
         @GetMapping("/{id}")
         public String showPersonById(@PathVariable("id") Long id , Model model){
             model.addAttribute("personById", personDAO.Id(id));
+            model.addAttribute("idBook" , bookDAO.bookOfId(id));
             return "view-with-person-by-id";
         }
         @GetMapping("/new")

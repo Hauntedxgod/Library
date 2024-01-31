@@ -29,11 +29,11 @@ public class BookDAO {
     }
 
     public void saveBook(LibraryBook libraryBook){
-        jdbcTemplate.update("insert into Book (NameOfBook , AuthorName , YearOfCreation) values (? , ? , ?)" ,
+        jdbcTemplate.update("insert into Book (NameOfbook , AuthorName , YearOfCreation) values (? , ? , ?)" ,
                 libraryBook.getNameOfBook() , libraryBook.getAuthorName() , libraryBook.getYearOfCreation());
     }
     public void updateBook(Long id , LibraryBook editedBook){
-        jdbcTemplate.update("update book set NameOfBook = ? , AuthorName = ? , YearOfCreation = ?  where id = ?" ,
+        jdbcTemplate.update("update book set NameOfbook = ? , AuthorName = ? , YearOfCreation = ?  where id = ?" ,
                 editedBook.getNameOfBook() , editedBook.getAuthorName(), editedBook.getYearOfCreation(), id);
     }
     public void deleteOfBook(Long id){
