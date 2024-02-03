@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maxima.dao.BookDAO;
 import ru.maxima.dao.PersonDAO;
+import ru.maxima.model.LibraryBook;
+import ru.maxima.model.OwnerDTO;
 import ru.maxima.model.Person;
 
 @Controller
@@ -28,8 +30,14 @@ public class PersonController {
         }
         @GetMapping("/{id}")
         public String showPersonById(@PathVariable("id") Long id , Model model){
-            model.addAttribute("personById", personDAO.Id(id));
+            Person person = personDAO.ById(id);
+            if (person.getOwnerPerson() != null){
+                person.setOwner(bookDAO.bookOfId(person.getOwnerPerson()));
+            }
+            model.addAttribute("allBook" , bookDAO.allBook());
+            model.addAttribute("personById", person);
             model.addAttribute("idBook" , bookDAO.bookOfId(id));
+            model.addAttribute("ownerDto", new OwnerDTO());
             return "view-with-person-by-id";
         }
         @GetMapping("/new")
@@ -46,10 +54,16 @@ public class PersonController {
             personDAO.save(person);
             return "redirect:/people";
         }
+         @PostMapping("/addowner/{id}")
+          public String orderPerson(@PathVariable("id") Long id , @ModelAttribute(name = "ownerDto") OwnerDTO ownerDTO
+            , BindingResult binding ){
+             personDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
+             return "redirect:/people" + id;
+    }
 
         @GetMapping("/{id}/edit")
         public String giveToUserPageToEditPerson(@PathVariable("id") Long id, Model model){
-            model.addAttribute("editedPerson" , personDAO.Id(id));
+            model.addAttribute("editedPerson" , personDAO.ById(id));
             return "view-to-edit-person";
         }
 

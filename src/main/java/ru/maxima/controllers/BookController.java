@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.maxima.dao.BookDAO;
 import ru.maxima.dao.PersonDAO;
 import ru.maxima.model.LibraryBook;
+import ru.maxima.model.OwnerDTO;
 
 @Controller
 @RequestMapping("/book")
@@ -17,8 +18,9 @@ public class BookController {
     private final BookDAO bookDAO;
     private final PersonDAO personDAO;
 
+
     @Autowired
-    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
+    public BookController(BookDAO bookDAO , PersonDAO personDAO) {
         this.bookDAO = bookDAO;
         this.personDAO = personDAO;
     }
@@ -26,15 +28,20 @@ public class BookController {
     @GetMapping()
     public String allBook(Model model){
         model.addAttribute("allBook" , bookDAO.allBook());
-        model.addAttribute("allPerson" , personDAO.allPeople());
         return "view-with-all-book";
     }
 
     @GetMapping("/{id}")
     public String idOfBook(@PathVariable("id")Long id , Model model){
-        model.addAttribute("idBook" , bookDAO.bookOfId(id) );
-        model.addAttribute("idPerson" ,  personDAO.Id(id));
-        return "view-with-book-id";
+        LibraryBook Book = bookDAO.bookOfId(id);
+        if (Book.getOwnerId() != null) {
+            Book.setOwner(personDAO.ById(Book.getOwnerId()));
+        }
+            model.addAttribute("idBook", Book);
+            model.addAttribute("allPerson", personDAO.allPeople());
+            model.addAttribute("idPerson" , personDAO.ById(id));
+            model.addAttribute("ownerDto", new OwnerDTO());
+            return "view-with-book-id";
     }
     @GetMapping("/new")
     public String getNewBook(Model model){
@@ -49,6 +56,12 @@ public class BookController {
         }
         bookDAO.saveBook(libraryBook);
         return "redirect:/book";
+    }
+    @PostMapping("/addowner/{id}")
+    public String orderBook(@PathVariable("id") Long id , @ModelAttribute(name = "ownerDto") OwnerDTO ownerDTO
+            , BindingResult binding ){
+        bookDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
+        return "redirect:/book" + id;
     }
 
     @GetMapping("/{id}/edit")
@@ -69,7 +82,7 @@ public class BookController {
     @PostMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id ) {
         bookDAO.deleteOfBook(id);
-        personDAO.deleteById(id);
+//        personDAO.deleteById(id);
         return "redirect:/people";
 
 

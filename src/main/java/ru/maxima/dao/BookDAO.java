@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.maxima.model.LibraryBook;
+import ru.maxima.model.Person;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @Component
 public class BookDAO {
     private final JdbcTemplate jdbcTemplate;
+
 
     @Autowired
     public BookDAO(JdbcTemplate jdbcTemplate) {
@@ -18,8 +19,7 @@ public class BookDAO {
     }
 
     public List<LibraryBook> allBook(){
-        List<LibraryBook> book = jdbcTemplate.query("select * from Book " ,
-                new BookMapper());
+        List<LibraryBook> book = jdbcTemplate.query("select * from book" , new BookMapper());
         return book;
     }
 
@@ -35,6 +35,9 @@ public class BookDAO {
     public void updateBook(Long id , LibraryBook editedBook){
         jdbcTemplate.update("update book set NameOfbook = ? , AuthorName = ? , YearOfCreation = ?  where id = ?" ,
                 editedBook.getNameOfBook() , editedBook.getAuthorName(), editedBook.getYearOfCreation(), id);
+    }
+    public void addOwner(Long id , Long ownerId){
+        jdbcTemplate.update("update book set owner = ? where id = ? " , ownerId , id);
     }
     public void deleteOfBook(Long id){
         jdbcTemplate.update("delete from Book where id = ? " , id);

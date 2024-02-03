@@ -17,10 +17,11 @@
 </form>
 <br/>
 <br/>
-<form th:method="POST" th:action="@{/people/delete/{id}(id=${idBook.getId()})}">
-    <label> Your book </label>
-
-    <input type="submit" value="Delete this book">
+<form th:method="POST" th:action="@{/people/addowner/{id}(id = ${personById.getId()})}" th:object="${ownerDto}">
+    <label> Enter name of new book</label>
+    <br/>
+    <p th:text="${personById?.getOwner()?.getNameOfBook()}"></p>
+    <br/>
 </form>
 
 

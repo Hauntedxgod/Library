@@ -10,24 +10,26 @@
 <div th:each="eachBook : ${allBook}" >
   <a th:href="@{/book/{id} (id=${eachBook.getId()})}"
      th:text="${eachBook.getNameOfBook() + eachBook.getAuthorName() + eachBook.getYearOfCreation()}">
-
-
-
   </a>
+
 </div>
+
 <br/>
+
 <br/>
+
 <br/>
 
 <a th:href="@{/book/new}">Create new book</a>
+
 <br/>
+
 <form th:action="@{/people}">
   <br/>
   <input type="submit" value="Click to go to people ">
+
 </form>
 
-
 </body>
-
 
 </html>
