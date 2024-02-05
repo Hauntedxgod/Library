@@ -25,7 +25,7 @@ public class Person {
     @Min(value = 0 , message = "Age should be more than 0")
     private int age;
 
-    private Long ownerPerson;
+    private Long ownerId;
 
     private LibraryBook owner;
 }

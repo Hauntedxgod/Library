@@ -10,20 +10,20 @@
 <p align="center" th:text="${idBook.getNameOfBook()}"></p>
 <p align="center" th:text="${idBook.getAuthorName()}"></p>
 <p align="center" th:text="${idBook.getYearOfCreation()}"></p>
+
+<br/>
+<br/>
 <p th:text="${idBook?.getOwner()?.getName()}"></p>
 <br/>
 <br/>
-
-<form th:method="POST" th:action="@{/book/addowner/{id}(id=${idBook.getId()})}" th:object="${ownerDto}">
+<form th:method="POST" th:action="@{/book/addowner/{id} (id=${idBook.getId()})}" th:object="${ownerDto}">
   <select th:field="*{ownerId}">
     <option th:each="person : ${allPerson}" th:value="${person.id}" th:text="${person.name}">
     </option>
   </select>
   <br/>
-  </form>
-<form th:method="POST" th:action="@{/people/addowner/{id}(id=${idPerson.getId()})}" th:object="${ownerDto}">
   <input type="submit" value="get people book">
-</form>
+  </form>
 <br/>
 <br/>
 

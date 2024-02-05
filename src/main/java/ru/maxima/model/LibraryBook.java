@@ -1,5 +1,6 @@
 package ru.maxima.model;
 
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -27,5 +28,6 @@ public class LibraryBook {
 
     private Long ownerId;
 
+    @ManyToOne
     private Person owner;
 }

@@ -9,20 +9,33 @@
 
 <p align="center" th:text="${personById.getName()}"></p>
 <p align="center" th:text="${personById.getAge()}"></p>
+<br/>
 
 <a th:href="@{/people/{id}/edit(id=${personById.getId()})}">Edit this person</a>
+<br/>
 
 <form th:method="POST" th:action="@{/people/delete/{id}(id=${personById.getId()})}">
     <input type="submit" value="Delete this person">
 </form>
 <br/>
 <br/>
-<form th:method="POST" th:action="@{/people/addowner/{id}(id = ${personById.getId()})}" th:object="${ownerDto}">
-    <label> Enter name of new book</label>
-    <br/>
-    <p th:text="${personById?.getOwner()?.getNameOfBook()}"></p>
-    <br/>
+<br/>
+<br/>
+<br/>
+<a th:text="${personById?.getOwner()?.getNameOfBook()} + ${personById?.getOwner()?.getAuthorName()}
+              + ${personById?.getOwner()?.getYearOfCreation()}">
+</a>
+<br/>
+<br/>
+<form th:method="POST" th:action="@{/people/addowner/{id} (id=${personById.getId()})}" th:object="${ownerDto}">
+    <select th:field="*{ownerId}">
+        <option th:each="book : ${allBook}" th:value="${book.id}" th:text="${book.nameOfBook}">
+        </option>
+    </select>
 </form>
+</a>
+<br/>
+
 
 
 </body>

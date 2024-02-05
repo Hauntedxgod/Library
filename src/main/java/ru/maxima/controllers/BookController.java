@@ -60,8 +60,10 @@ public class BookController {
     @PostMapping("/addowner/{id}")
     public String orderBook(@PathVariable("id") Long id , @ModelAttribute(name = "ownerDto") OwnerDTO ownerDTO
             , BindingResult binding ){
-        bookDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
-        return "redirect:/book" + id;
+        if (ownerDTO.getOwnerId() != null){
+            bookDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
+        }
+        return "redirect:/book";
     }
 
     @GetMapping("/{id}/edit")

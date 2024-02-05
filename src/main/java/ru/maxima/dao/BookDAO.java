@@ -37,9 +37,11 @@ public class BookDAO {
                 editedBook.getNameOfBook() , editedBook.getAuthorName(), editedBook.getYearOfCreation(), id);
     }
     public void addOwner(Long id , Long ownerId){
-        jdbcTemplate.update("update book set owner = ? where id = ? " , ownerId , id);
+        jdbcTemplate.update("update book set owner = ? where id = ? ", ownerId , id);
     }
     public void deleteOfBook(Long id){
         jdbcTemplate.update("delete from Book where id = ? " , id);
     }
+
+
 }

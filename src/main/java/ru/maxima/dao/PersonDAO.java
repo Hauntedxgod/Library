@@ -36,7 +36,7 @@ public class PersonDAO {
                 , editedPerson.getName() , editedPerson.getAge() , id);
     }
     public void addOwner(Long id , Long ownerId){
-        jdbcTemplate.update("update human set ownerPerson = ? where id = ? " , ownerId , id);
+        jdbcTemplate.update("update human set owner = ? where id = ? ",  ownerId , id);
     }
     public void deleteById(Long id) {
         jdbcTemplate.update("delete from human where id = ? " , id );

@@ -31,8 +31,8 @@ public class PersonController {
         @GetMapping("/{id}")
         public String showPersonById(@PathVariable("id") Long id , Model model){
             Person person = personDAO.ById(id);
-            if (person.getOwnerPerson() != null){
-                person.setOwner(bookDAO.bookOfId(person.getOwnerPerson()));
+            if (person.getOwnerId() != null) {
+                person.setOwner(bookDAO.bookOfId(person.getOwnerId()));
             }
             model.addAttribute("allBook" , bookDAO.allBook());
             model.addAttribute("personById", person);
@@ -57,8 +57,10 @@ public class PersonController {
          @PostMapping("/addowner/{id}")
           public String orderPerson(@PathVariable("id") Long id , @ModelAttribute(name = "ownerDto") OwnerDTO ownerDTO
             , BindingResult binding ){
-             personDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
-             return "redirect:/people" + id;
+             if (ownerDTO.getOwnerId() != null){
+                 personDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
+             }
+             return "redirect:/people";
     }
 
         @GetMapping("/{id}/edit")
