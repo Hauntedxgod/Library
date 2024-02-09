@@ -2,42 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title of Page with all people</title>
+    <title>Title of Page with people</title>
 </head>
 
 <body>
-
 <p align="center" th:text="${personById.getName()}"></p>
 <p align="center" th:text="${personById.getAge()}"></p>
 <br/>
-
-<a th:href="@{/people/{id}/edit(id=${personById.getId()})}">Edit this person</a>
 <br/>
-
-<form th:method="POST" th:action="@{/people/delete/{id}(id=${personById.getId()})}">
-    <input type="submit" value="Delete this person">
-</form>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<a th:text="${personById?.getOwner()?.getNameOfBook()} + ${personById?.getOwner()?.getAuthorName()}
-              + ${personById?.getOwner()?.getYearOfCreation()}">
-</a>
+<!--<label for="not">The person has not yet taken a single book </label>-->
+<!--<p th:if="${personById?.getBooks() == null }" id="not"></p>-->
 <br/>
 <br/>
 <form th:method="POST" th:action="@{/people/addowner/{id} (id=${personById.getId()})}" th:object="${ownerDto}">
-    <select th:field="*{ownerId}">
-        <option th:each="book : ${allBook}" th:value="${book.id}" th:text="${book.nameOfBook}">
-        </option>
-    </select>
+    <br/>
+    <br/>
+    <label> Books </label>
+    <p th:each="book : ${personById?.getBooks()}" th:text="${book.nameOfBook} +
+     ${book.authorName} + ${book.yearOfCreation}  ">
 </form>
-</a>
+<hr align="left" width="15%" />
+
 <br/>
-
-
-
+<form th:method="POST" th:action="@{/people/deletePerson/addowner/{id} (id=${personById.getId()})}">
+    <input type="submit" value="Click to release the book">
+</form>
+<br/>
+<br/>
+<a th:href="@{/people/{id}/edit(id=${personById.getId()})}">Edit this person</a>
+<br/>
+<br/>
+<br/>
+<form th:method="POST" th:action="@{/people/delete/{id}(id=${personById.getId()})}">
+    <input type="submit" value="Delete this person">
+</form>
 </body>
 
 </html>

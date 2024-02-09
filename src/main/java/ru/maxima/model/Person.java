@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -25,7 +27,6 @@ public class Person {
     @Min(value = 0 , message = "Age should be more than 0")
     private int age;
 
-    private Long ownerId;
 
-    private LibraryBook owner;
+    private List<LibraryBook> books;
 }

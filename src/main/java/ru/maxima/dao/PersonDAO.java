@@ -38,6 +38,9 @@ public class PersonDAO {
     public void addOwner(Long id , Long ownerId){
         jdbcTemplate.update("update human set owner = ? where id = ? ",  ownerId , id);
     }
+    public void deleteOfPersonBooks(Long id){
+        jdbcTemplate.update("update book set owner = null where id = ? ", id);
+    }
     public void deleteById(Long id) {
         jdbcTemplate.update("delete from human where id = ? " , id );
     }

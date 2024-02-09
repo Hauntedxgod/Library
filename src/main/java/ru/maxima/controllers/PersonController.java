@@ -31,12 +31,10 @@ public class PersonController {
         @GetMapping("/{id}")
         public String showPersonById(@PathVariable("id") Long id , Model model){
             Person person = personDAO.ById(id);
-            if (person.getOwnerId() != null) {
-                person.setOwner(bookDAO.bookOfId(person.getOwnerId()));
-            }
+            person.setBooks(bookDAO.getOwnerId(id));
             model.addAttribute("allBook" , bookDAO.allBook());
             model.addAttribute("personById", person);
-            model.addAttribute("idBook" , bookDAO.bookOfId(id));
+            model.addAttribute("getBookId" , bookDAO.bookOfId(id));
             model.addAttribute("ownerDto", new OwnerDTO());
             return "view-with-person-by-id";
         }
@@ -61,7 +59,13 @@ public class PersonController {
                  personDAO.addOwner(id , Long.valueOf(ownerDTO.getOwnerId()));
              }
              return "redirect:/people";
-    }
+        }
+
+        @PostMapping("/deletePerson/addowner/{id}")
+         public String deletePersonBook(@PathVariable("id") Long id) {
+            bookDAO.deleteOfPersonBook(id);
+        return "redirect:/book";
+        }
 
         @GetMapping("/{id}/edit")
         public String giveToUserPageToEditPerson(@PathVariable("id") Long id, Model model){

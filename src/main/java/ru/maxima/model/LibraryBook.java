@@ -28,6 +28,5 @@ public class LibraryBook {
 
     private Long ownerId;
 
-    @ManyToOne
     private Person owner;
 }

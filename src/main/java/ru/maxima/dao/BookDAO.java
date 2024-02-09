@@ -28,6 +28,11 @@ public class BookDAO {
                 new BookMapper()).stream().findAny().orElse(null);
     }
 
+    public List<LibraryBook> getOwnerId(Long ownerId){
+        return jdbcTemplate.query("select * from Book where owner = ?" , new Object[]{ownerId} ,
+                new BookMapper());
+    }
+
     public void saveBook(LibraryBook libraryBook){
         jdbcTemplate.update("insert into Book (NameOfbook , AuthorName , YearOfCreation) values (? , ? , ?)" ,
                 libraryBook.getNameOfBook() , libraryBook.getAuthorName() , libraryBook.getYearOfCreation());
@@ -38,6 +43,9 @@ public class BookDAO {
     }
     public void addOwner(Long id , Long ownerId){
         jdbcTemplate.update("update book set owner = ? where id = ? ", ownerId , id);
+    }
+    public void deleteOfPersonBook(Long id){
+        jdbcTemplate.update("update book set owner = null where id = ? ", id);
     }
     public void deleteOfBook(Long id){
         jdbcTemplate.update("delete from Book where id = ? " , id);

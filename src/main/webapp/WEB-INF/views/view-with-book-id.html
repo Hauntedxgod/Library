@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="content-type"content="text/html;charset=Win-1251">
   <title>Title of Page with all book</title>
 </head>
 
@@ -13,21 +13,28 @@
 
 <br/>
 <br/>
-<p th:text="${idBook?.getOwner()?.getName()}"></p>
+<label>He has the book now:</label>
+<form th:method="POST" th:action="@{/book/deletes/addowner/{id} (id=${idBook.getId()})}">
+  <p th:text="${idBook?.getOwner()?.getName()}"></p>
+  <input type="submit" value="Click to release the book">
+</form>
+  <hr align="left" width="7%" />
 <br/>
+
 <br/>
-<form th:method="POST" th:action="@{/book/addowner/{id} (id=${idBook.getId()})}" th:object="${ownerDto}">
+<form th:if="${idBook.getOwner() == null}" th:method="POST" th:action="@{/book/addowner/{id} (id=${idBook.getId()})}" th:object="${ownerDto}">
   <select th:field="*{ownerId}">
     <option th:each="person : ${allPerson}" th:value="${person.id}" th:text="${person.name}">
     </option>
   </select>
-  <br/>
-  <input type="submit" value="get people book">
+  <input type="submit" value="Get book people">
   </form>
 <br/>
 <br/>
 
 <a th:href="@{/book/{id}/edit(id=${idBook.getId()})}">Edit this Book</a>
+<br/>
+<br/>
 <form th:method="POST" th:action="@{/book/delete/{id}(id=${idBook.getId()})}">
   <br/>
   <input type="submit" value="Delete this book">

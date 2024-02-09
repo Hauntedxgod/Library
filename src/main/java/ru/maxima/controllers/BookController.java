@@ -84,9 +84,13 @@ public class BookController {
     @PostMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id ) {
         bookDAO.deleteOfBook(id);
-//        personDAO.deleteById(id);
-        return "redirect:/people";
+        return "redirect:/book";
 
 
+    }
+    @PostMapping("/deletes/addowner/{id}")
+    public String deletePersonBook(@PathVariable("id") Long id){
+        bookDAO.deleteOfPersonBook(id);
+        return "redirect:/book";
     }
 }
