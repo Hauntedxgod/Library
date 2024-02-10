@@ -27,19 +27,19 @@ public class BookController {
 
     @GetMapping()
     public String allBook(Model model){
-        model.addAttribute("allBook" , bookDAO.allBook());
+        model.addAttribute("allBook" , bookDAO.getAllBook());
         return "view-with-all-book";
     }
 
     @GetMapping("/{id}")
     public String idOfBook(@PathVariable("id")Long id , Model model){
-        LibraryBook Book = bookDAO.bookOfId(id);
+        LibraryBook Book = bookDAO.getBookOfId(id);
         if (Book.getOwnerId() != null) {
-            Book.setOwner(personDAO.ById(Book.getOwnerId()));
+            Book.setOwner(personDAO.getIdPerson(Book.getOwnerId()));
         }
             model.addAttribute("idBook", Book);
-            model.addAttribute("allPerson", personDAO.allPeople());
-            model.addAttribute("idPerson" , personDAO.ById(id));
+            model.addAttribute("allPerson", personDAO.getAllPeople());
+            model.addAttribute("idPerson" , personDAO.getIdPerson(id));
             model.addAttribute("ownerDto", new OwnerDTO());
             return "view-with-book-id";
     }
@@ -68,7 +68,7 @@ public class BookController {
 
     @GetMapping("/{id}/edit")
     public String editedBook(@PathVariable("id" )  Long id , Model model ){
-        model.addAttribute("editedBook" , bookDAO.bookOfId(id));
+        model.addAttribute("editedBook" , bookDAO.getBookOfId(id));
         return "view-to-edit-book";
     }
 

@@ -10,9 +10,6 @@
 <p align="center" th:text="${personById.getAge()}"></p>
 <br/>
 <br/>
-<!--<label for="not">The person has not yet taken a single book </label>-->
-<!--<p th:if="${personById?.getBooks() == null }" id="not"></p>-->
-<br/>
 <br/>
 <form th:method="POST" th:action="@{/people/addowner/{id} (id=${personById.getId()})}" th:object="${ownerDto}">
     <br/>
@@ -20,6 +17,11 @@
     <label> Books </label>
     <p th:each="book : ${personById?.getBooks()}" th:text="${book.nameOfBook} +
      ${book.authorName} + ${book.yearOfCreation}  ">
+</form>
+<form th:if="${personById.books == null}" th:method="POST"
+      th:action="@{/people/addowner/{id} (id=${personById.getId()})}" th:object="${ownerDto}">
+    <br/>
+    <label>The person has not yet taken a single book </label>
 </form>
 <hr align="left" width="15%" />
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.maxima.model.LibraryBook;
-import ru.maxima.model.Person;
 
 import java.util.List;
 
@@ -18,12 +17,12 @@ public class BookDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<LibraryBook> allBook(){
+    public List<LibraryBook> getAllBook(){
         List<LibraryBook> book = jdbcTemplate.query("select * from book" , new BookMapper());
         return book;
     }
 
-    public LibraryBook bookOfId(Long id){
+    public LibraryBook getBookOfId(Long id){
         return jdbcTemplate.query("select * from Book where id = ?" , new Object[]{id} ,
                 new BookMapper()).stream().findAny().orElse(null);
     }

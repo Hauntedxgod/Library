@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.maxima.dao.BookDAO;
 import ru.maxima.dao.PersonDAO;
-import ru.maxima.model.LibraryBook;
 import ru.maxima.model.OwnerDTO;
 import ru.maxima.model.Person;
 
@@ -25,16 +24,16 @@ public class PersonController {
         }
         @GetMapping()
         public String showAllPeople(Model model){
-            model.addAttribute("allPeople" , personDAO.allPeople());
+            model.addAttribute("allPeople" , personDAO.getAllPeople());
             return "view-with-alll-people";
         }
         @GetMapping("/{id}")
         public String showPersonById(@PathVariable("id") Long id , Model model){
-            Person person = personDAO.ById(id);
+            Person person = personDAO.getIdPerson(id);
             person.setBooks(bookDAO.getOwnerId(id));
-            model.addAttribute("allBook" , bookDAO.allBook());
+            model.addAttribute("allBook" , bookDAO.getAllBook());
             model.addAttribute("personById", person);
-            model.addAttribute("getBookId" , bookDAO.bookOfId(id));
+            model.addAttribute("getBookId" , bookDAO.getBookOfId(id));
             model.addAttribute("ownerDto", new OwnerDTO());
             return "view-with-person-by-id";
         }
@@ -49,7 +48,7 @@ public class PersonController {
             if (binding.hasErrors()){
                 return "view-to-create-new-person";
             }
-            personDAO.save(person);
+            personDAO.savePerson(person);
             return "redirect:/people";
         }
          @PostMapping("/addowner/{id}")
@@ -69,7 +68,7 @@ public class PersonController {
 
         @GetMapping("/{id}/edit")
         public String giveToUserPageToEditPerson(@PathVariable("id") Long id, Model model){
-            model.addAttribute("editedPerson" , personDAO.ById(id));
+            model.addAttribute("editedPerson" , personDAO.getIdPerson(id));
             return "view-to-edit-person";
         }
 
@@ -79,12 +78,12 @@ public class PersonController {
             if (binding.hasErrors()){
                 return "view-to-edit-person";
             }
-            personDAO.update(id , editedPerson);
+            personDAO.getUpdatePerson(id , editedPerson);
             return "redirect:/people";
         }
         @PostMapping("/delete/{id}")
         public String deletePerson(@PathVariable("id") Long id ) {
-            personDAO.deleteById(id);
+            personDAO.deletePerson(id);
             return "redirect:/people";
 
 

@@ -17,21 +17,21 @@ public class PersonDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Person> allPeople(){
+    public List<Person> getAllPeople(){
         List<Person> people = jdbcTemplate.query("select * from human" , new PersonMapper());
         return people;
     }
 
-    public Person ById (Long id){
+    public Person getIdPerson(Long id){
         return jdbcTemplate.query("select * from human where id = ? " , new Object[]{id} ,
                 new PersonMapper()).stream().findAny().orElse(null);
     }
 
-    public void save(Person person){
+    public void savePerson (Person person){
         jdbcTemplate.update("insert into human (name , age ) values (? , ? )",
                 person.getName() , person.getAge());
     }
-    public void update(Long id , Person editedPerson){
+    public void getUpdatePerson(Long id , Person editedPerson){
         jdbcTemplate.update("update human set name = ? , age = ? where id = ?"
                 , editedPerson.getName() , editedPerson.getAge() , id);
     }
@@ -41,7 +41,7 @@ public class PersonDAO {
     public void deleteOfPersonBooks(Long id){
         jdbcTemplate.update("update book set owner = null where id = ? ", id);
     }
-    public void deleteById(Long id) {
+    public void deletePerson(Long id) {
         jdbcTemplate.update("delete from human where id = ? " , id );
     }
 

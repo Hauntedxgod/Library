@@ -13,7 +13,7 @@
     <div style="color: red" th:if="${#fields.hasErrors('nameOfBook')}" th:errors="*{nameOfBook}">name Error</div>
     <br/>
     <br/>
-    <label for="nameA">Enter authorName of new Book </label>
+    <label for="nameA">Enter author name of new Book </label>
     <input type="text" th:field="*{authorName}" id="nameA">
     <div style="color: red" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}"> authorName Error</div>
     <br/>
